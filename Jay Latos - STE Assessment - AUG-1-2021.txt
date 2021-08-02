@@ -1,0 +1,26 @@
+Jay Latos - 8/1/2021 - STE Assessment - Bug Challenge
+
+Scenario 1: Add Employee
+
+1) The spelling of "Dependants" is somewhat unusual, especially in the US. I would expect "Dependents" with no "a".
+2) The Dependants field seems to accept an arbitrarily large value, which may not be desired. (Maybe cap at 99? Less?)
+3) There seems to be a missing penny for Net Pay on the following IDs:
+   - 297103cc-29e5-4965-9796-d0d411ffe47c
+   - 9e5de040-0f4a-44b3-8c46-a3e4a247bd68
+   - ae6d227b-df88-4b03-8fcc-d0d568325a6a
+   - ed208e21-3058-4d7f-8d5b-6fb25b4fe35e
+Repro: add benefit cost to net pay, expect it equal gross pay, but in these cases it is a penny short
+
+
+Scenario 2: Edit Employee
+
+4) The Edit employee button/icon opens the Add Employee dialog, and still says "Add Employee" which could be confusing to the user. Suggest changing the title to "Update Employee". 
+ 
+
+
+
+Scenario 3: Delete Employee
+
+5) 
+
+
