@@ -4,7 +4,9 @@ Scenario 1: Add Employee
 
 1) The spelling of "Dependants" is somewhat unusual, especially in the US. I would expect "Dependents" with no "a".
 2) The Dependants field seems to accept an arbitrarily large value, which may not be desired. (Maybe cap at 99? Less?)
-3) There seems to be a missing penny for Net Pay on the following IDs:
+3) The Dependants field allows the user to enter text. Suggest limiting to numeric values.
+4) Name fields are similarly uncapped, which could be a security concern, allowing script injection.
+5) There seems to be a missing penny for Net Pay on the following IDs:
    - 297103cc-29e5-4965-9796-d0d411ffe47c
    - 9e5de040-0f4a-44b3-8c46-a3e4a247bd68
    - ae6d227b-df88-4b03-8fcc-d0d568325a6a
@@ -14,13 +16,9 @@ Repro: add benefit cost to net pay, expect it equal gross pay, but in these case
 
 Scenario 2: Edit Employee
 
-4) The Edit employee button/icon opens the Add Employee dialog, and still says "Add Employee" which could be confusing to the user. Suggest changing the title to "Update Employee". 
+6) The Edit employee button/icon opens the Add Employee dialog, and still says "Add Employee" which could be confusing to the user. Suggest changing the title to "Update Employee". 
  
 
 
 
 Scenario 3: Delete Employee
-
-5) 
-
-
