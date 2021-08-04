@@ -1,24 +1,47 @@
 Jay Latos - 8/1/2021 - STE Assessment - Bug Challenge
 
 Scenario 1: Add Employee
+====================================================================
+1) Upon POST to /api/employees we get a 500 Internal Server Error
+Repro: 
+- use Authorization value Basic VGVzdFVzZXI4On1jc2UzRy4kdk1faQ==
+- use body {"firstName": "Bluejay", "lastName": "Blackburn", "dependants": 3}
+* this is indicated as a valid post in the Postman documentation, so if this is not valid, the documentation would need updating
+* I also tried including the other fields (e.g. "salary": 200000.0, etc) but still get the 500 error for POST
 
-1) The spelling of "Dependants" is somewhat unusual, especially in the US. I would expect "Dependents" with no "a".
-2) The Dependants field seems to accept an arbitrarily large value, which may not be desired. (Maybe cap at 99? Less?)
-3) The Dependants field allows the user to enter text. Suggest limiting to numeric values.
-4) Name fields are similarly uncapped, which could be a security concern, allowing script injection.
-5) There seems to be a missing penny for Net Pay on the following IDs:
-   - 297103cc-29e5-4965-9796-d0d411ffe47c
-   - 9e5de040-0f4a-44b3-8c46-a3e4a247bd68
-   - ae6d227b-df88-4b03-8fcc-d0d568325a6a
-   - ed208e21-3058-4d7f-8d5b-6fb25b4fe35e
-Repro: add benefit cost to net pay, expect it equal gross pay, but in these cases it is a penny short
+2) The spelling of "Dependants" is unusual, especially in the US. I would expect "Dependents" with no "a".
+
+3) The Dependants field seems to accept an arbitrarily large value (UI), which may not be desired. (Maybe cap at 99? Less?)
+
+4) The Dependants field (UI) allows the user to enter text. Suggest limiting to numeric values.
+
+5) Name fields are similarly uncapped (UI), which could possibly be a security concern, allowing script injection (this is probably protected at the DB level, but there's no reason to allow the user to add more than they can actually use).
+
 
 
 Scenario 2: Edit Employee
-
+====================================================================
 6) The Edit employee button/icon opens the Add Employee dialog, and still says "Add Employee" which could be confusing to the user. Suggest changing the title to "Update Employee". 
- 
+
+7) There is a small rounding issue that causes Net Pay to display as a penny short in some cases. 
+Repro: Observe the following IDs in the UI
+ - 297103cc-29e5-4965-9796-d0d411ffe47c
+ - 9e5de040-0f4a-44b3-8c46-a3e4a247bd68
+ - ae6d227b-df88-4b03-8fcc-d0d568325a6a
+ - ed208e21-3058-4d7f-8d5b-6fb25b4fe35e
+ - Add benefit cost to net pay, expect it equal gross pay, but in these cases it is a penny short due to the rounding
+ - Example, for ID= 297103cc-29e5-4965-9796-d0d411ffe47c we have the following values 
+   {"gross": 7692.30762,
+    "benefitsCost": 96.1538544,
+    "net": 7596.154}
+   But we can check this ourselves with the calculator and see that 7596.154 + 96.1538544 = 7692.3078544 (not 7692.30762)
+
+8) Putting an arbitraily large value in Salary field produces a 500 error
+Repro: 
+- Issue a PUT command and set Salary to, for example, 9999999999999999999999999999999999999999999999999999999999999999999999
+- I would expect this to return a user-friendly message that "the value is too large" instead of a 500 error
 
 
 
 Scenario 3: Delete Employee
+====================================================================
