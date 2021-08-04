@@ -4,10 +4,10 @@ Scenario 1: Add Employee
 ====================================================================
 1) Upon POST to /api/employees we get a 500 Internal Server Error
 Repro: 
-- use Authorization value Basic VGVzdFVzZXI4On1jc2UzRy4kdk1faQ==
-- use body {"firstName": "Bluejay", "lastName": "Blackburn", "dependants": 3}
-* this is indicated as a valid post in the Postman documentation, so if this is not valid, the documentation would need updating
-* I also tried including the other fields (e.g. "salary": 200000.0, etc) but still get the 500 error for POST
+ - use Authorization value Basic VGVzdFVzZXI4On1jc2UzRy4kdk1faQ==
+ - use body {"firstName": "Bluejay", "lastName": "Blackburn", "dependants": 3}
+ * this is indicated as a valid post in the Postman documentation, so if this is not valid, the documentation would need updating
+ * I also tried including the other fields (e.g. "salary": 200000.0, etc) but still get the 500 error for POST
 
 2) The spelling of "Dependants" is unusual, especially in the US. I would expect "Dependents" with no "a".
 
@@ -38,10 +38,16 @@ Repro: Observe the following IDs in the UI
 
 8) Putting an arbitraily large value in Salary field produces a 500 error
 Repro: 
-- Issue a PUT command and set Salary to, for example, 9999999999999999999999999999999999999999999999999999999999999999999999
-- I would expect this to return a user-friendly message that "the value is too large" instead of a 500 error
+ - Issue a PUT command and set Salary to, for example, 9999999999999999999999999999999999999999999999999999999999999999999999
+ - I would expect this to return a user-friendly message that "the value is too large" instead of a 500 error
 
+9) Related to #7, the Salary field is not being set correctly
+Repro: 
+ - Set the Salary to              200000.838
+ - Observe the returned value of  200000.844
+ * it seems that an extra ~0.006 is being added for no reason
 
 
 Scenario 3: Delete Employee
 ====================================================================
+10) Deleting a single ID appears to have nuked all data, but I can't repro since i get 500 error for a POST
