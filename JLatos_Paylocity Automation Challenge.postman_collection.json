@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "967d63e6-577d-4571-89c2-db92c3d53e72",
+		"name": "Paylocity Automation Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Employee",
+			"item": [
+				{
+					"name": "Add Employee Minimum Valid Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('employee_min_data', pm.response.json().id);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Default field values\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    //expected benefit cost includes employee(1000) and dependants(500)\r",
+									"    var benny = (1000+(responseJson.dependants*500))/26;\r",
+									"    //the toFixed method rounds for us, but outputs as a string, so we use \"+\" to force a number\r",
+									"    benny = +benny.toFixed(5);\r",
+									"    pm.expect(responseJson.gross).to.eql(2000.0);\r",
+									"    pm.expect(responseJson.salary).to.eql(52000.0);\r",
+									"    pm.expect(responseJson.benefitsCost).to.eql(benny);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic VGVzdFVzZXI4On1jc2UzRy4kdk1faQ==",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"firstName\": \"Bluejeay\",\r\n        \"lastName\": \"Blackburn\",\r\n        \"dependants\": 2\r\n    }"
+						},
+						"url": {
+							"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+							"protocol": "https",
+							"host": [
+								"wmxrwq14uc",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Employee",
+			"item": [
+				{
+					"name": "Get Employee List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+							"protocol": "https",
+							"host": [
+								"wmxrwq14uc",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee Min Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Default field values\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    //expected benefit cost includes employee(1000) and dependants(500)\r",
+									"    var benny = (1000+(responseJson.dependants*500))/26;\r",
+									"    //the toFixed method rounds for us, but outputs as a string, so we use \"+\" to force a number\r",
+									"    benny = +benny.toFixed(5);\r",
+									"    pm.expect(responseJson.gross).to.eql(2000.0);\r",
+									"    pm.expect(responseJson.salary).to.eql(52000.0);\r",
+									"    pm.expect(responseJson.benefitsCost).to.eql(benny);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees/{{employee_min_data}}",
+							"protocol": "https",
+							"host": [
+								"wmxrwq14uc",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"api",
+								"employees",
+								"{{employee_min_data}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update Employee",
+			"item": [
+				{
+					"name": "Update Employee Min Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Default field values\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    //expected benefit cost includes employee(1000) and dependants(500)\r",
+									"    var benny = (1000+(responseJson.dependants*500))/26;\r",
+									"    //the toFixed method rounds for us, but outputs as a string, so we use \"+\" to force a number\r",
+									"    benny = +benny.toFixed(5);\r",
+									"    pm.expect(responseJson.gross).to.eql(2000.0);\r",
+									"    pm.expect(responseJson.salary).to.eql(52000.0);\r",
+									"    pm.expect(responseJson.benefitsCost).to.eql(benny);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{employee_min_data}}\",\r\n    \"firstName\": \"Bluejayyyy\",\r\n    \"lastName\": \"Blackburnnnn\",\r\n    \"dependants\": \"9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees",
+							"protocol": "https",
+							"host": [
+								"wmxrwq14uc",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Employee",
+			"item": [
+				{
+					"name": "Delete Employee Min Data",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic VGVzdFVzZXIyMTp9cHY9biF4M1swRlU=",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/employees/{{employee_min_data}}",
+							"protocol": "https",
+							"host": [
+								"wmxrwq14uc",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"api",
+								"employees",
+								"{{employee_min_data}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "Basic VGVzdFVzZXIyMTp9cHY9biF4M1swRlU=",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "employee_min_data",
+			"value": ""
+		}
+	]
+}
